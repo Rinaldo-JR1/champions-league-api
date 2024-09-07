@@ -3,7 +3,7 @@ import { PlayerService } from "../services/player.service";
 
 export class PlayerController {
   public async getPlayer(req: Request, res: Response, next: NextFunction) {
-    const result = await PlayerService.getPlayers("Teste");
+    const result = await PlayerService.getPlayers();
 
     res.status(200).json(result);
   }
