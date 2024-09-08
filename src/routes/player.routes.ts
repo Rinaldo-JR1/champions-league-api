@@ -8,5 +8,6 @@ const playerController = new PlayerController();
 playerRoutes.get("/", playerController.getPlayer);
 playerRoutes.get("/:id", playerController.getPlayerById);
 playerRoutes.post("/register", playerController.addPlayer);
+playerRoutes.delete("/delete/:id", playerController.deletePlayer);
 
 export { playerRoutes };

@@ -19,4 +19,16 @@ export class HttpHelper {
       body: data,
     };
   }
+  public static async notFound(data: any): Promise<HttpResponse> {
+    return {
+      statusCode: 404,
+      body: data,
+    };
+  }
+  public static async badRequest(data: any): Promise<HttpResponse> {
+    return {
+      statusCode: 400,
+      body: data,
+    };
+  }
 }

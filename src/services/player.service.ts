@@ -8,26 +8,36 @@ export class PlayerService {
 
   public async getPlayers() {
     const data = await this.playerRepository.findAllPlayers();
-    let response = null;
+
     if (!data) {
-      response = await HttpHelper.noContent(data);
-    } else {
-      response = await HttpHelper.ok(data);
+      return await HttpHelper.noContent({ message: "No players found" });
     }
-    return response;
+    return await HttpHelper.ok(data);
   }
+
   public async getPlayerById(id: number) {
     const data = await this.playerRepository.findPlayerById(id);
-    let response = null;
     if (!data) {
-      response = await HttpHelper.noContent(data);
-    } else {
-      response = await HttpHelper.ok(data);
+      return await HttpHelper.notFound({ message: "Player not found", id: id });
     }
-    return response;
+    return await HttpHelper.ok(data);
   }
+
   public async addPlayer(player: PlayerModel) {
     await this.playerRepository.addPlayer(player);
+    if (!player) {
+      return await HttpHelper.badRequest({ message: "Player not added" });
+    }
     return await HttpHelper.created({ message: "Player added", data: player });
+  }
+  public async deletePlayer(id: number) {
+    if (!id) {
+      return await HttpHelper.badRequest({ message: "Player id is required" });
+    }
+    const deleted = await this.playerRepository.deletePlayer(id);
+    if (deleted) {
+      return await HttpHelper.ok({ message: "Player deleted", id: id });
+    }
+    return await HttpHelper.notFound({ message: "Player not found", id: id });
   }
 }

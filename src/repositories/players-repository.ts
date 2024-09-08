@@ -16,4 +16,17 @@ export class PlayerRepository {
     }
     return;
   }
+  public async deletePlayer(id: number): Promise<boolean> {
+    try {
+      const index = database.findIndex((player) => player.id === id);
+      if (index === -1) {
+        return false;
+      }
+      database.splice(index, 1);
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+    return true;
+  }
 }

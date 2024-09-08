@@ -10,6 +10,7 @@ export class PlayerController {
     this.getPlayer = this.getPlayer.bind(this);
     this.getPlayerById = this.getPlayerById.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
+    this.deletePlayer = this.deletePlayer.bind(this);
   }
 
   public async getPlayer(req: Request, res: Response, next: NextFunction) {
@@ -26,5 +27,10 @@ export class PlayerController {
     const player: PlayerModel = req.body;
     const httpReponse = await this.playerService.addPlayer(req.body);
     return res.status(httpReponse.statusCode).json(httpReponse.body);
+  }
+  public async deletePlayer(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    const httpResponse = await this.playerService.deletePlayer(parseInt(id));
+    return res.status(httpResponse.statusCode).json(httpResponse.body);
   }
 }
