@@ -1,14 +1,12 @@
+import { PlayerRepository } from "../repositories/players-repository";
 import { HttpHelper } from "../utils/http.helper";
 
 export class PlayerService {
   constructor() {}
+  private playerRepository = new PlayerRepository();
 
-  public static async getPlayers() {
-    const data = [
-      { name: "Bellingham", position: "CM" },
-      { name: "Haaland", position: "ST" },
-    ];
-
+  public async getPlayers() {
+    const data = await this.playerRepository.findAllPlayers();
     let response = null;
     if (!data) {
       response = await HttpHelper.noContent(data);
