@@ -1,16 +1,16 @@
 import { PlayerModel } from "./../models/PlayerModel";
-import { database } from "../data";
+import { Players } from "../data/players";
 
 export class PlayerRepository {
   public async findAllPlayers(): Promise<PlayerModel[]> {
-    return database;
+    return Players;
   }
   public async findPlayerById(id: number): Promise<PlayerModel | undefined> {
-    return database.find((player) => player.id === id);
+    return Players.find((player) => player.id === id);
   }
   public async addPlayer(player: PlayerModel): Promise<void> {
     try {
-      database.push(player);
+      Players.push(player);
     } catch (error) {
       console.error(error);
     }
@@ -18,11 +18,24 @@ export class PlayerRepository {
   }
   public async deletePlayer(id: number): Promise<boolean> {
     try {
-      const index = database.findIndex((player) => player.id === id);
+      const index = Players.findIndex((player) => player.id === id);
       if (index === -1) {
         return false;
       }
-      database.splice(index, 1);
+      Players.splice(index, 1);
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+    return true;
+  }
+  public async updatePlayer(id: number, player: PlayerModel): Promise<boolean> {
+    try {
+      const index = Players.findIndex((player) => player.id === id);
+      if (index === -1) {
+        return false;
+      }
+      Players[index] = { ...Players[index], ...player };
     } catch (error) {
       console.error(error);
       return false;

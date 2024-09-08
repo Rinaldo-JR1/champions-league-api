@@ -10,4 +10,6 @@ playerRoutes.get("/:id", playerController.getPlayerById);
 playerRoutes.post("/register", playerController.addPlayer);
 playerRoutes.delete("/delete/:id", playerController.deletePlayer);
 
+playerRoutes.put("/update/:id", playerController.updatePlayer);
+
 export { playerRoutes };

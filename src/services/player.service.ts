@@ -40,4 +40,17 @@ export class PlayerService {
     }
     return await HttpHelper.notFound({ message: "Player not found", id: id });
   }
+  public async updatePlayer(id: number, player: PlayerModel) {
+    if (!id) {
+      return await HttpHelper.badRequest({ message: "Player id is required" });
+    }
+    if (!player) {
+      return await HttpHelper.badRequest({ message: "Player data is required" });
+    }
+    const updated = await this.playerRepository.updatePlayer(id, player);
+    if (updated) {
+      return await HttpHelper.ok({ message: "Player updated", id: id });
+    }
+    return await HttpHelper.notFound({ message: "Player not found", id: id });
+  }
 }

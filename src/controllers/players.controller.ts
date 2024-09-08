@@ -11,6 +11,7 @@ export class PlayerController {
     this.getPlayerById = this.getPlayerById.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
     this.deletePlayer = this.deletePlayer.bind(this);
+    this.updatePlayer = this.updatePlayer.bind(this);
   }
 
   public async getPlayer(req: Request, res: Response, next: NextFunction) {
@@ -31,6 +32,12 @@ export class PlayerController {
   public async deletePlayer(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
     const httpResponse = await this.playerService.deletePlayer(parseInt(id));
+    return res.status(httpResponse.statusCode).json(httpResponse.body);
+  }
+  public async updatePlayer(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    const player: PlayerModel = req.body;
+    const httpResponse = await this.playerService.updatePlayer(parseInt(id), player);
     return res.status(httpResponse.statusCode).json(httpResponse.body);
   }
 }
