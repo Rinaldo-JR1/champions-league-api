@@ -13,4 +13,10 @@ export class HttpHelper {
       body: data,
     };
   }
+  public static async created(data: any): Promise<HttpResponse> {
+    return {
+      statusCode: 201,
+      body: data,
+    };
+  }
 }

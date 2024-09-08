@@ -1,3 +1,4 @@
+import { PlayerModel } from "../models/PlayerModel";
 import { PlayerRepository } from "../repositories/players-repository";
 import { HttpHelper } from "../utils/http.helper";
 
@@ -13,7 +14,20 @@ export class PlayerService {
     } else {
       response = await HttpHelper.ok(data);
     }
-
     return response;
+  }
+  public async getPlayerById(id: number) {
+    const data = await this.playerRepository.findPlayerById(id);
+    let response = null;
+    if (!data) {
+      response = await HttpHelper.noContent(data);
+    } else {
+      response = await HttpHelper.ok(data);
+    }
+    return response;
+  }
+  public async addPlayer(player: PlayerModel) {
+    await this.playerRepository.addPlayer(player);
+    return await HttpHelper.created({ message: "Player added", data: player });
   }
 }

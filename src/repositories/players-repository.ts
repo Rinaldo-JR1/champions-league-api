@@ -8,4 +8,12 @@ export class PlayerRepository {
   public async findPlayerById(id: number): Promise<PlayerModel | undefined> {
     return database.find((player) => player.id === id);
   }
+  public async addPlayer(player: PlayerModel): Promise<void> {
+    try {
+      database.push(player);
+    } catch (error) {
+      console.error(error);
+    }
+    return;
+  }
 }
